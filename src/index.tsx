@@ -1,15 +1,33 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import App from './home/App';
+import YourTummy from './main/YourTummy';
+import LoginSelect from './login/LoginSelect';
+import Navi from './main/Navi';
+import Setting from './main/Setting';
+import reportWebVitals from './tmp/reportWebVitals';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
+
 root.render(
   <React.StrictMode>
-    <App />
+    <Router>
+      <div className="Container">
+        <Navi />
+        <div className="Routes">
+          <Routes>
+            <Route path="/home" element={<App />} />
+            <Route path="/api" element={<YourTummy />} />
+            <Route path="/login" element={<LoginSelect />} />
+            <Route path="/setting" element={<Setting />} />
+          </Routes>
+        </div>
+      </div>
+    </Router>
   </React.StrictMode>
 );
 

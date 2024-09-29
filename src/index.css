@@ -11,3 +11,42 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+/* index.css */
+nav {
+  height: 100vh;
+  /* ナビゲーションバーを全画面の高さにする */
+}
+
+nav a {
+  display: block;
+  padding: 10px;
+  font-size: 16px;
+}
+
+.Container {
+  display: flex;
+  /* 横並びにするために flex を使用 */
+  width: 100%;
+  height: 100vh;
+  /* ビューポートの高さに合わせる */
+}
+
+.Navigation {
+  display: flex;
+  flex-direction: column;
+  /* ナビゲーションバーを縦に並べる */
+  width: 200px;
+  background-color: #b64141;
+  padding: 10px;
+  border-right: 1px solid #6c6c6c;
+    /* 高い値を設定 */
+}
+
+.Routes {
+  flex-grow: 1;
+  /* 残りのスペースを占有 */
+  padding: 20px;
+  overflow: auto;
+  /* コンテンツがはみ出たときにスクロールする */
+}

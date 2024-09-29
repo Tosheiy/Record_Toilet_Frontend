@@ -1,0 +1,127 @@
+/* Overlay_modify.css */
+.overlay-modify {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.overlay-content-modify {
+    background: white;
+    padding: 120px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    width: 80%;
+    max-width: 646px;
+    height: 60%;
+    max-height: 765px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.textbox-3-label-modify,
+.textbox-3-modify {
+    color: #333;
+}
+
+.textbox-3-label-modify {
+    display: block;
+    margin-bottom: 5px;
+    font-size: .9em;
+    text-align: left;
+    /* テキストを左寄せにする */
+}
+
+.textbox-3-modify {
+    width: 500px;
+    max-width: 100%;
+    padding: 12px 16px;
+    /* パディングを増やして高さを調整 */
+    border: none;
+    border-radius: 8px;
+    /* 少し角を丸める */
+    background: #f7f7f7;
+    font-size: 1.2em;
+    /* フォントサイズを少し大きく */
+    line-height: 1.5;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    /* 少し影をつけて立体感を出す */
+    display: block;
+    /* ブロック要素にすることで横幅いっぱいに広げる */
+    margin: 0 auto;
+    /* 水平方向に中央揃え */
+    margin-bottom: 50px;
+    /* テキストボックスの下に余白を追加 */
+}
+
+.textbox-3-modify::placeholder {
+    color: #999;
+}
+
+.overlay-title-modify {
+    height: 10%;
+}
+
+.register_Button-modify {
+    background-color: #f2f2f2;
+    /* ボタンの背景色 */
+    border: none;
+    /* ボタンの枠線を削除 */
+    border-radius: 8px;
+    /* ボタンを丸くする */
+    padding: 10px;
+    /* 画像周りに余白を設定 */
+    cursor: pointer;
+    /* カーソルをポインタに変更 */
+    display: flex;
+    /* 中央揃えに必要 */
+    justify-content: center;
+    /* 横方向の中央揃え */
+    align-items: center;
+    /* 縦方向の中央揃え */
+    width: 80px;
+    /* ボタンの幅 */
+    height: 40px;
+    /* ボタンの高さ */
+    font-size: medium;
+    margin-left: 220px;
+}
+
+.button-container-modify{
+    display: flex;
+    justify-content: space-between;
+        /* ボタン同士のスペースを調整 */
+}
+
+.register_Button-modify-delete{
+    background-color: #f2f2f2;
+    color: #DD5050;
+    /* ボタンの背景色 */
+    border: none;
+    /* ボタンの枠線を削除 */
+    border-radius: 8px;
+    /* ボタンを丸くする */
+    padding: 10px;
+    /* 画像周りに余白を設定 */
+    cursor: pointer;
+    /* カーソルをポインタに変更 */
+    display: flex;
+    /* 中央揃えに必要 */
+    justify-content: center;
+    /* 横方向の中央揃え */
+    align-items: center;
+    /* 縦方向の中央揃え */
+    width: 80px;
+    /* ボタンの幅 */
+    height: 40px;
+    /* ボタンの高さ */
+    font-size: medium;
+    margin-left: 150px;
+}

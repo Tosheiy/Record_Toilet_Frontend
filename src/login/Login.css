@@ -1,0 +1,95 @@
+.Login {
+    margin-left: 300px;
+}
+
+.UserInfo {
+    display: flex;
+    /* 横並びにする */
+    align-items: flex-start;
+    /* 上揃えにする */
+    gap: 10px;
+    /* 画像とテキストの間のスペース */
+    margin-bottom: px;
+}
+
+.imgStyle {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    /* 画像を丸く表示 */
+}
+
+.textStyle {
+    font-size: 20px;
+    margin-top: 23px;
+    /* 余白をなくす */
+}
+
+.SignOutbutton {
+    background-color: #f2f2f2;
+    /* ボタンの背景色 */
+    border: none;
+    /* ボタンの枠線を削除 */
+    border-radius: 8px;
+    /* ボタンを丸くする */
+    padding: 10px;
+    /* 画像周りに余白を設定 */
+    cursor: pointer;
+    /* カーソルをポインタに変更 */
+    display: flex;
+    /* 中央揃えに必要 */
+    justify-content: center;
+    /* 横方向の中央揃え */
+    align-items: center;
+    /* 縦方向の中央揃え */
+    width: 250px;
+    /* ボタンの幅 */
+    height: 50px;
+    /* ボタンの高さ */
+    font-size: medium;
+    margin-bottom: 40px;
+}
+
+.SignOutbutton:hover {
+    background-color: #c7c7c7;
+    /* ホバー時の色を濃くする */
+}
+
+.Settingbutton {
+    background-color: #f2f2f2;
+    /* ボタンの背景色 */
+    border: none;
+    /* ボタンの枠線を削除 */
+    border-radius: 8px;
+    /* ボタンを丸くする */
+    padding: 10px;
+    /* 画像周りに余白を設定 */
+    cursor: pointer;
+    /* カーソルをポインタに変更 */
+    display: flex;
+    /* 中央揃えに必要 */
+    justify-content: center;
+    /* 横方向の中央揃え */
+    align-items: center;
+    /* 縦方向の中央揃え */
+    width: 250px;
+    /* ボタンの幅 */
+    height: 50px;
+    /* ボタンの高さ */
+    font-size: medium;
+    margin-bottom: 4px;
+}
+
+.Settingbutton:hover {
+    background-color: #c7c7c7;
+    /* ホバー時の色を濃くする */
+}
+
+.hr {
+    border: 0;
+    /* デフォルトの枠線を消す */
+    border-top: 1px solid #ccc;
+    /* 横棒の色と太さを設定 */
+    margin: 10px 0;
+    /* 上下のマージンを設定 */
+}

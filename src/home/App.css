@@ -1,0 +1,195 @@
+.App {
+  display: flex;
+  flex-direction: column;
+  /* 縦に並べる */
+  margin-left: 300px;
+  /* ナビゲーションバーの幅を考慮*/
+  /* ナビゲーションバーの高さと一致させる */
+}
+
+.inputText {
+  padding: 10px;
+}
+
+.submitButton {
+  padding: 8px 15px;
+  cursor: pointer;
+}
+
+.todoList li {
+  width: 10%;
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.todoList li input {
+  padding: 7px;
+}
+
+.todo-table {
+  width: 100%;
+  border-collapse: collapse;
+  /* セル間の隙間をなくす */
+}
+
+.todo-table th {
+  padding: 10px;
+  text-align: left;
+  border-bottom: 2px solid #ddd;
+  /* 説明列だけ仕切りをつける */
+}
+
+.todo-table td {
+  padding: 10px;
+  text-align: left;
+  border: none;
+  /* データセルの仕切りを消す */
+}
+
+.img-button {
+  display: flex;
+  /* 子要素を横に並べる */
+  align-items: center;
+  /* 縦方向に中央揃え */
+  border: 2px solid #E0E0E0;
+  /* ボタンの枠線 */
+  border-radius: 8px;
+  /* 角を丸める */
+  padding: 8px 16px;
+  /* ボタンの内側の余白 */
+  background-color: #FFFFFF;
+  /* ボタンの背景色 */
+  cursor: pointer;
+  /* カーソルをポインタに変更 */
+  text-align: left;
+  /* テキストの位置揃え */
+  gap: 12px;
+  /* 画像とテキストの間隔 */
+}
+
+.button-image {
+  width: 24px;
+  /* 画像の幅 */
+  height: 24px;
+  /* 画像の高さ */
+}
+
+.button-text {
+  margin: 0;
+  /* テキストのマージンを削除 */
+  font-size: 16px;
+  /* テキストのフォントサイズ */
+  color: #828282;
+}
+
+.container {
+  display: flex;
+  /* Flexboxを使用して子要素を配置 */
+  justify-content: flex-end;
+  /* 子要素を右端に配置 */
+  padding: 16px;
+  /* コンテナの内側の余白 */
+}
+
+.todo-table td:last-child {
+  text-align: right;
+}
+
+.todo-table td:last-child {
+  text-align: right;
+  position: relative;
+}
+
+.todo-button {
+  background: none;
+  /* ボタンのデフォルト背景を削除 */
+  border: none;
+  /* ボタンの枠線を削除 */
+  padding: 0;
+  /* ボタンの内側余白を削除 */
+  cursor: pointer;
+  /* カーソルをポインタに変更 */
+  border-radius: 8px;
+  /* ボタンを丸くする */
+
+}
+
+.todo-button img {
+  display: block;
+  /* 画像をブロック要素として表示 */
+  width: 24px;
+  /* 必要に応じて画像サイズを調整 */
+  height: auto;
+  /* 画像の比率を保ちながら高さを自動調整 */
+}
+
+.Record_Button:hover {
+  background-color: #c7c7c7;
+  /* ホバー時の色を濃くする */
+}
+
+.button-container {
+  display: flex;
+  /* 子要素を横並びにする */
+  align-items: center;
+  /* 垂直方向の中央揃え */
+  gap: 10px;
+  /* ボタン同士の間隔を指定 */
+}
+
+.Record_Button {
+  background-color: #f2f2f2;
+  /* ボタンの背景色 */
+  border: none;
+  /* ボタンの枠線を削除 */
+  border-radius: 8px;
+  /* ボタンを丸くする */
+  padding: 10px;
+  /* 画像周りに余白を設定 */
+  cursor: pointer;
+  /* カーソルをポインタに変更 */
+  display: flex;
+  /* 中央揃えに必要 */
+  justify-content: center;
+  /* 横方向の中央揃え */
+  align-items: center;
+  /* 縦方向の中央揃え */
+  width: 80px;
+  /* ボタンの幅 */
+  height: 40px;
+  /* ボタンの高さ */
+  font-size: medium;
+}
+
+.img-button {
+  display: flex;
+  /* 画像とテキストを横並びまたは縦並びにできる */
+  align-items: left;
+  /* 中央揃え */
+  padding: 10px 20px;
+  background-color: #f2f2f2;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.button-image {
+  width: 20px;
+  height: 20px;
+  margin-right: 8px;
+  /* 画像とテキストの間にスペースを追加 */
+}
+
+.button-text {
+  font-size: 16px;
+}
+
+.button-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  /* 左右の端にボタンを配置 */
+  width: 100%;
+  /* 親要素の幅を指定 */
+}
