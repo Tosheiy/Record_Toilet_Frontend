@@ -16,13 +16,15 @@ function App() {
   const [selectedRecord, setSelectedRecord] = useState<Record | null>(null);
 
   type Record = {
-    Id: number;
+    Id: string;
     Description: string;
     Created_at: string;
-    Length: number;
-    Location: string;
+    Length_time: number;
+    Location_at: string;
     Feeling: number;
   };
+
+  const requestURL = process.env.REACT_APP_REQUEST_URL;
 
   useEffect(() => {
     if (recordsUpdated && user) {
@@ -36,23 +38,26 @@ function App() {
           if (auth.currentUser) {
             idToken = await auth.currentUser.getIdToken();
           }
-          console.log('ID Token:', idToken); // トークンが正しいか確認
-          const result = await axios.get("http://localhost:8080/toilet", {
+
+          const result = await axios.get(requestURL + "/toilet", {
             headers: {
               'Authorization': `Bearer ${idToken}`
             }
           })
-          const newRecords = result.data.map((item: any) => ({
-            Id: item.ID,
-            Description: item.description,
-            Created_at: item.timestamp,
-            Length: item.Length,
-            Location: item.location,
-            Feeling: item.feeling,
-          }));
-          // Created_atで降順ソート
-          newRecords.sort((a: { Created_at: string | number | Date; }, b: { Created_at: string | number | Date; }) => new Date(b.Created_at).getTime() - new Date(a.Created_at).getTime());
-          setRecords(newRecords);
+          let newRecords: Record[] = [];
+          if (result.data !== null) {
+            newRecords = result.data.map((item: any) => ({
+              Id: item.id,
+              Description: item.description,
+              Created_at: item.created_at,
+              Length_time: item.length_time,
+              Location_at: item.location_at,
+              Feeling: item.feeling,
+            }));
+            // Created_atで降順ソート
+            newRecords.sort((a: { Created_at: string | number | Date; }, b: { Created_at: string | number | Date; }) => new Date(b.Created_at).getTime() - new Date(a.Created_at).getTime());
+            console.log(newRecords)
+          };
         } catch (error) {
           console.log('失敗');
           console.log(error);
@@ -61,6 +66,7 @@ function App() {
       }
       fetchData();
       setRecordsUpdated(false); // データ取得後にフラグをリセット
+      
     }
   }, [recordsUpdated]);
 
@@ -93,8 +99,8 @@ function App() {
     const runAsyncFunction = async () => {
       if (!user) {
         navigate("/login"); // ログインしていない場合にリダイレクト\
-      } 
-      else{
+      }
+      else {
         await waitForOneSecond();
         await handleAddOrEdit();
       }
@@ -106,7 +112,7 @@ function App() {
   const waitForOneSecond = () => {
     return new Promise(resolve => setTimeout(resolve, 100));
   };
-  
+
   return (
     <div className="App">
       <h2>トイレ履歴</h2>
@@ -138,8 +144,8 @@ function App() {
                 <tr key={record.Id}>
                   <td>{record.Created_at.slice(0, 16)}</td>
                   <td>{record.Feeling}</td>
-                  <td>{record.Length}</td>
-                  <td>{record.Location}</td>
+                  <td>{record.Length_time}</td>
+                  <td>{record.Location_at}</td>
                   <td >{record.Description}</td>
                   <td><button className="todo-button" onClick={() => handleOverlayModifyClick(record)}>
                     <img src="./more-horizontal.png" alt='3点リーダー' /></button>
@@ -154,8 +160,8 @@ function App() {
               id={selectedRecord.Id.toString()}
               init_date={selectedRecord.Created_at.slice(0, 16)}
               init_val={selectedRecord.Feeling.toString()}
-              init_time={selectedRecord.Length.toString()}
-              init_location={selectedRecord.Location}
+              init_time={selectedRecord.Length_time.toString()}
+              init_location={selectedRecord.Location_at}
               init_description={selectedRecord.Description}
             />
           )}

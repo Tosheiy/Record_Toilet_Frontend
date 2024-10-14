@@ -9,6 +9,8 @@ interface OverlayProps {
     onClose: () => void; // 閉じる関数を渡す
 }
 
+const requestURL = process.env.REACT_APP_REQUEST_URL;
+
 const OverlayRecord: React.FC<OverlayProps> = ({ onClose }) => {
     const handleOverlayClick = (e: React.MouseEvent<HTMLDivElement>) => {
         // クリックイベントがオーバーレイの内側でなければ onClose を呼び出す
@@ -36,10 +38,10 @@ const OverlayRecord: React.FC<OverlayProps> = ({ onClose }) => {
 
         const recordData = {
             description: description,
-            length: parseNumber(time),
-            location: location,
+            length_time: parseNumber(time),
+            location_at: location,
             feeling: parseNumber(feeling),
-            timestamp: date,
+            created_at: date.slice(0, 16).replace('T', ' '),
         };
 
         if (user) {
@@ -51,7 +53,7 @@ const OverlayRecord: React.FC<OverlayProps> = ({ onClose }) => {
                 }
 
                 // POSTリクエストを送信
-                await axios.post('http://localhost:8080/toilet', recordData, {
+                await axios.post(requestURL + '/toilet', recordData, {
                     headers: {
                         'Content-Type': 'application/json',
                         // 多分ここに認証情報

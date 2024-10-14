@@ -8,6 +8,9 @@ import axios from 'axios';
 import OverlayChecking from './OverlayChecking';
 
 
+const requestURL = process.env.REACT_APP_REQUEST_URL;
+
+
 // Setting画面の全てがここにある（SelfAPI作成）
 function Setting() {
     const [user] = useAuthState(auth);
@@ -45,7 +48,7 @@ function Setting() {
                         idToken = await auth.currentUser.getIdToken();
                     }
 
-                    const result = await axios.get("http://localhost:8080/toilet/self", {
+                    const result = await axios.get(requestURL + "/toilet/self", {
                         headers: {
                             'Authorization': `Bearer ${idToken}`
                         }
@@ -89,7 +92,7 @@ function Setting() {
                     idToken = await auth.currentUser.getIdToken();
                 }
 
-                const result = await axios.get("http://localhost:8080/toilet/self/register", {
+                const result = await axios.get(requestURL + "/toilet/self/register", {
                     headers: {
                         'Authorization': `Bearer ${idToken}`
                     }
@@ -132,7 +135,7 @@ function Setting() {
                 }
 
                 const payload = {}
-                const result = await axios.put("http://localhost:8080/toilet/self", payload, {
+                const result = await axios.put(requestURL + "/toilet/self/" + selfAuthObject?.utid, payload, {
                     headers: {
                         'Authorization': `Bearer ${idToken}`
                     }
@@ -173,7 +176,7 @@ function Setting() {
                     idToken = await auth.currentUser.getIdToken();
                 }
 
-                const result = await axios.delete("http://localhost:8080/toilet/self", {
+                const result = await axios.delete(requestURL + "/toilet/self/" + selfAuthObject?.utid, {
                     headers: {
                         'Authorization': `Bearer ${idToken}`
                     }

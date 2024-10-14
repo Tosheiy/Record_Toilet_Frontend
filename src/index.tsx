@@ -20,6 +20,7 @@ root.render(
         <Navi />
         <div className="Routes">
           <Routes>
+            <Route path="/" element={<App />} />
             <Route path="/home" element={<App />} />
             <Route path="/api" element={<YourTummy />} />
             <Route path="/login" element={<LoginSelect />} />

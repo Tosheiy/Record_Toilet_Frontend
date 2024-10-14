@@ -14,6 +14,8 @@ interface OverlayProps {
     init_description: string;
 }
 
+const requestURL = process.env.REACT_APP_REQUEST_URL;
+
 const OverlayModify: React.FC<OverlayProps> = ({ onClose, id, init_date, init_val, init_time, init_location, init_description }) => {
     const handleOverlayClickModify = (e: React.MouseEvent<HTMLDivElement>) => {
         // クリックイベントがオーバーレイの内側でなければ onClose を呼び出す
@@ -41,13 +43,11 @@ const OverlayModify: React.FC<OverlayProps> = ({ onClose, id, init_date, init_va
         if (user) {
             const recordData = {
                 description: description,
-                length: parseNumber(time),
-                location: location,
+                length_time: parseNumber(time),
+                location_at: location,
                 feeling: parseNumber(feeling),
-                timestamp: date,
+                created_at: date.slice(0, 16).replace('T', ' '),
             };
-
-            const id_num = parseNumber(id);
 
             try {
                 // トークンを取得する
@@ -57,7 +57,7 @@ const OverlayModify: React.FC<OverlayProps> = ({ onClose, id, init_date, init_va
                 }
 
                 // POSTリクエストを送信
-                await axios.put('http://localhost:8080/toilet/' + id_num, recordData, {
+                await axios.put(requestURL + '/toilet/' + id, recordData, {
                     headers: {
                         'Content-Type': 'application/json',
                         'Authorization': `Bearer ${idToken}`
@@ -76,7 +76,6 @@ const OverlayModify: React.FC<OverlayProps> = ({ onClose, id, init_date, init_va
         e.preventDefault(); // ページリロードを防ぐ
 
         if (user) {
-            const id_num = parseNumber(id);
 
             try {
                 // トークンを取得する
@@ -86,7 +85,7 @@ const OverlayModify: React.FC<OverlayProps> = ({ onClose, id, init_date, init_va
                 }
 
                 // POSTリクエストを送信
-                await axios.delete('http://localhost:8080/toilet/' + id_num, {
+                await axios.delete(requestURL + '/toilet/' + id, {
                     headers: {
                         'Content-Type': 'application/json',
                         'Authorization': `Bearer ${idToken}`
