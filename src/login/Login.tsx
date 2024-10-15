@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import './Login.css';
-import { auth, provider } from './firebase';
+import { auth } from './firebase';
 import { useAuthState } from "react-firebase-hooks/auth"
 import { useNavigate } from 'react-router-dom';
 import OverlayChecking from '../main/OverlayChecking';

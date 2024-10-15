@@ -1,303 +1,79 @@
+// Setting.tsx
 import React, { useEffect, useState } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
-import './Setting.css';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '../login/firebase';
-import { UserInfo, SignOutButton, SignInButton } from '../login/Login'
-import axios from 'axios';
-import OverlayChecking from './OverlayChecking';
+import { fetchUser, generateAPIKey, updateAPIKey, deleteAPIKey } from '../api';
+import UserApiInfo from './UserApiInfo';
+import './Setting.css';
 
-
-const requestURL = process.env.REACT_APP_REQUEST_URL;
-
-
-// Setting画面の全てがここにある（SelfAPI作成）
 function Setting() {
     const [user] = useAuthState(auth);
     const [selfAuthFlag, setSelfAuthFlag] = useState<boolean>(false);
-    const [selfAuthObject, setSelfAuthObject] = useState<User>();
+    const [selfAuthObject, setSelfAuthObject] = useState<{ utid: string; apikey: string }>();
     const [isOverlayVisibleCheckUpdate, setIsOverlayVisibleCheckUpdate] = useState<boolean>(false);
     const [isOverlayVisibleCheckDelete, setIsOverlayVisibleCheckDelete] = useState<boolean>(false);
     const navigate = useNavigate();
-    const handleClick = () => {
-        navigate('/setting');
-    }
-
-    const waitForOneSecond = () => {
-        return new Promise(resolve => setTimeout(resolve, 100));
-    };
-
-    type User = {
-        utid: string;
-        apikey: string;
-    };
-
     const location = useLocation();
 
     useEffect(() => {
         if (user) {
-
             const fetchData = async () => {
-
-                await waitForOneSecond();
-                // データ取得の処理など
-                try {
-                    // トークンを取得する
-                    let idToken = '';
-                    if (auth.currentUser) {
-                        idToken = await auth.currentUser.getIdToken();
-                    }
-
-                    const result = await axios.get(requestURL + "/toilet/self", {
-                        headers: {
-                            'Authorization': `Bearer ${idToken}`
-                        }
-                    })
-
-                    const utid = result.data.utid;
-                    const apikey = result.data.apikey;
-
-                    // User オブジェクトを作成
-                    const userObject: User = { utid, apikey };
-
-                    // User オブジェクトを状態に設定
-                    setSelfAuthObject(userObject);
-
-
-
-                    if (utid !== "none") {
-                        setSelfAuthFlag(true);
-                    }
-
-                } catch (error) {
-                    console.log('失敗');
-                    console.log(error);
+                const userData = await fetchUser();
+                if (userData) {
+                    setSelfAuthObject(userData);
+                    setSelfAuthFlag(userData.utid !== "none");
                 }
-
-            }
+            };
             fetchData();
         }
-    }, [location]);
+    }, [location, user]);
 
-
-    const generateAPIkey = () => {
-
-        const fetchData = async () => {
-
-            // データ取得の処理など
-            try {
-                // トークンを取得する
-                let idToken = '';
-                if (auth.currentUser) {
-                    idToken = await auth.currentUser.getIdToken();
-                }
-
-                const result = await axios.get(requestURL + "/toilet/self/register", {
-                    headers: {
-                        'Authorization': `Bearer ${idToken}`
-                    }
-                })
-
-                const utid = result.data.utid;
-                const apikey = result.data.apiikey;
-
-                // User オブジェクトを作成
-                const userObject: User = { utid, apikey };
-
-                // User オブジェクトを状態に設定
-                setSelfAuthObject(userObject);
-
-
-                if (utid !== "none") {
-                    setSelfAuthFlag(true);
-                }
-
-            } catch (error) {
-                console.log('失敗');
-                console.log(error);
-            }
-
-        };
-        fetchData();
-        handleClick();
+    const generateAPIkey = async () => {
+        const userData = await generateAPIKey();
+        setSelfAuthObject(userData);
+        setSelfAuthFlag(userData.utid !== "none");
+        navigate('/setting');
     };
 
-    const updateAPIkey = () => {
-
-        const fetchData = async () => {
-
-            // データ取得の処理など
-            try {
-                // トークンを取得する
-                let idToken = '';
-                if (auth.currentUser) {
-                    idToken = await auth.currentUser.getIdToken();
-                }
-
-                const payload = {}
-                const result = await axios.put(requestURL + "/toilet/self/" + selfAuthObject?.utid, payload, {
-                    headers: {
-                        'Authorization': `Bearer ${idToken}`
-                    }
-                })
-
-                const utid = result.data.utid;
-                const apikey = result.data.apiikey;
-
-                // User オブジェクトを作成
-                const userObject: User = { utid, apikey };
-
-                // User オブジェクトを状態に設定
-                setSelfAuthObject(userObject);
-
-                if (utid !== "none") {
-                    setSelfAuthFlag(true);
-                }
-
-            } catch (error) {
-                console.log('失敗');
-                console.log(error);
-            }
-
-        };
-        fetchData();
-        handleClick();
-    };
-
-    const deleteAPIkey = () => {
-
-        const fetchData = async () => {
-
-            // データ取得の処理など
-            try {
-                // トークンを取得する
-                let idToken = '';
-                if (auth.currentUser) {
-                    idToken = await auth.currentUser.getIdToken();
-                }
-
-                const result = await axios.delete(requestURL + "/toilet/self/" + selfAuthObject?.utid, {
-                    headers: {
-                        'Authorization': `Bearer ${idToken}`
-                    }
-                })
-
-                const utid: string = "none";
-                const apikey: string = "none";
-
-                // User オブジェクトを作成
-                const userObject: User = { utid, apikey };
-
-                // User オブジェクトを状態に設定
-                setSelfAuthObject(userObject);
-
-
-
-                if (utid !== "none") {
-                    setSelfAuthFlag(true);
-                }
-
-            } catch (error) {
-                console.log('失敗');
-                console.log(error);
-            }
-
-        };
-        fetchData();
-        setSelfAuthFlag(false)
-        handleClick();
-    };
-
-    const GenerateApiButton = () => {
-        return (
-            <div>
-                <button className='generatekeybutton1' onClick={generateAPIkey}>APIキーを生成</button>
-            </div>
-        )
-    }
-
-    const copyButton = (elementId: string): React.MouseEventHandler<HTMLImageElement> => (event) => {
-        // 引数で得たIDの要素のテキストを取得
-        const element = document.getElementById(elementId) as HTMLInputElement;
-
-        // 上記要素をクリップボードにコピーする
-        if (element && element.value !== null) {
-            navigator.clipboard.writeText(element.value);
+    const updateAPIkey = async () => {
+        if (selfAuthObject?.utid) {
+            const userData = await updateAPIKey(selfAuthObject.utid);
+            setSelfAuthObject(userData);
+            setSelfAuthFlag(userData.utid !== "none");
+            navigate('/setting');
         }
     };
 
-    const ClickUpdate = () => {
-        setIsOverlayVisibleCheckUpdate(!isOverlayVisibleCheckUpdate);
-    }
-    const ClickDelete = () => {
-        setIsOverlayVisibleCheckDelete(!isOverlayVisibleCheckDelete);
-    }
-
-    const UserApiInfo = () => {
-        return (
-            <div>
-                <div>
-                    <label>
-                        <span className="textbox-2-label">ID</span>
-                        <input
-                            type="text"
-                            className="textbox-2"
-                            id="utid"
-                            value={selfAuthObject?.utid || ''}
-                            readOnly />
-                        <img src="./copy.png" alt="filter" className="button-image-copy" onClick={copyButton("utid")} />
-                    </label>
-                    <label>
-                        <span className="textbox-2-label">API key</span>
-                        <input
-                            type="password"
-                            className="textbox-2"
-                            id="apikey"
-                            value={selfAuthObject?.apikey || ''}
-                            readOnly
-                        />
-                        <img src="./copy.png" alt="filter" className="button-image-copy" onClick={copyButton("apikey")} />
-                    </label>
-                </div>
-                <div className='buttonstyle'>
-                    <button className='generatekeybutton' onClick={ClickUpdate}>更新</button>
-                    {isOverlayVisibleCheckUpdate && (
-                        <OverlayChecking
-                            onClose={ClickUpdate}
-                            onProcess={updateAPIkey}
-                            target='更新'
-                        />
-                    )}
-                    <button className='generatekeybutton' onClick={ClickDelete}>削除</button>
-                    {isOverlayVisibleCheckDelete && (
-                        <OverlayChecking
-                            onClose={ClickDelete}
-                            onProcess={deleteAPIkey}
-                            target='削除'
-                        />
-                    )}
-                </div>
-            </div>
-        )
-    }
+    const deleteAPIkey = async () => {
+        if (selfAuthObject?.utid) {
+            await deleteAPIKey(selfAuthObject.utid);
+            setSelfAuthObject({ utid: "none", apikey: "none" });
+            setSelfAuthFlag(false);
+            navigate('/setting');
+        }
+    };
 
     return (
         <div className='Setting'>
             <h2>設定</h2>
             <h3>Self API</h3>
             {selfAuthFlag ? (
-                <div>
-                    <UserApiInfo />
-                </div>
+                <UserApiInfo
+                    utid={selfAuthObject?.utid || ''}
+                    apikey={selfAuthObject?.apikey || ''}
+                    onUpdate={updateAPIkey}
+                    onDelete={deleteAPIkey}
+                    isOverlayVisibleCheckUpdate={isOverlayVisibleCheckUpdate}
+                    isOverlayVisibleCheckDelete={isOverlayVisibleCheckDelete}
+                    ClickUpdate={() => setIsOverlayVisibleCheckUpdate(!isOverlayVisibleCheckUpdate)}
+                    ClickDelete={() => setIsOverlayVisibleCheckDelete(!isOverlayVisibleCheckDelete)}
+                />
             ) : (
-                <GenerateApiButton />
-            )
-            }
+                <button className='generatekeybutton1' onClick={generateAPIkey}>APIキーを生成</button>
+            )}
         </div>
     );
 }
 
 export default Setting;
-
-
-

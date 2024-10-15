@@ -28,6 +28,7 @@ const handleGoogleLogin = async () => {
     const provider = new GoogleAuthProvider();
     try {
         const result = await signInWithPopup(auth, provider);
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const user = result.user;
     } catch (error) {
         console.error("Error during Google login:", error);
@@ -38,6 +39,7 @@ const handleGoogleLogin = async () => {
 const handleEmailSignup = async (email: string, password: string) => {
     try {
         const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const user = userCredential.user;
     } catch (error) {
         console.error("Error during email signup:", error);
@@ -48,6 +50,7 @@ const handleEmailSignup = async (email: string, password: string) => {
 const handleEmailLogin = async (email: string, password: string) => {
     try {
         const userCredential = await signInWithEmailAndPassword(auth, email, password);
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const user = userCredential.user;
     } catch (error) {
         console.error("Error during email login:", error);

@@ -6,3 +6,8 @@ export interface Record {
     Location_at: string;
     Feeling: number;
 }
+
+export interface User {
+    utid: string;
+    apikey: string;
+};

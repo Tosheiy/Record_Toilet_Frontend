@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import './OverlayModify.css';
-import axios from 'axios';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '../login/firebase';
+import { updateRecord, deleteRecord } from '../api'
 
 interface OverlayProps {
     onClose: () => void; // 閉じる関数を渡す
@@ -13,8 +13,6 @@ interface OverlayProps {
     init_location: string;
     init_description: string;
 }
-
-const requestURL = process.env.REACT_APP_REQUEST_URL;
 
 const OverlayModify: React.FC<OverlayProps> = ({ onClose, id, init_date, init_val, init_time, init_location, init_description }) => {
     const handleOverlayClickModify = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -50,19 +48,7 @@ const OverlayModify: React.FC<OverlayProps> = ({ onClose, id, init_date, init_va
             };
 
             try {
-                // トークンを取得する
-                let idToken = '';
-                if (auth.currentUser) {
-                    idToken = await auth.currentUser.getIdToken();
-                }
-
-                // POSTリクエストを送信
-                await axios.put(requestURL + '/toilet/' + id, recordData, {
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${idToken}`
-                    }
-                });
+                await updateRecord(id ,recordData);
 
                 // 登録が成功したらオーバーレイを閉じる
                 onClose();
@@ -76,21 +62,8 @@ const OverlayModify: React.FC<OverlayProps> = ({ onClose, id, init_date, init_va
         e.preventDefault(); // ページリロードを防ぐ
 
         if (user) {
-
             try {
-                // トークンを取得する
-                let idToken = '';
-                if (auth.currentUser) {
-                    idToken = await auth.currentUser.getIdToken();
-                }
-
-                // POSTリクエストを送信
-                await axios.delete(requestURL + '/toilet/' + id, {
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${idToken}`
-                    }
-                });
+                await deleteRecord(id);
 
                 // 登録が成功したらオーバーレイを閉じる
                 onClose();

@@ -1,9 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
-import axios from 'axios';
-import { auth } from './login/firebase';
-import { Record } from './types';
-
-const requestURL = process.env.REACT_APP_REQUEST_URL || '';
+import { Record } from '../types';
+import { fetchToiletRecords } from '../api'
 
 function useRecords() {
     const [records, setRecords] = useState<Record[]>([]);
@@ -13,28 +10,9 @@ function useRecords() {
     const [selectedRecord, setSelectedRecord] = useState<Record | null>(null);
 
     const fetchData = useCallback(async () => {
-        try {
-            if (auth.currentUser) {
-                const idToken = await auth.currentUser.getIdToken();
-                const result = await axios.get(`${requestURL}/toilet`, {
-                    headers: { Authorization: `Bearer ${idToken}` }
-                });
-                const newRecords = result.data.map((item: any) => ({
-                    Id: item.id,
-                    Description: item.description,
-                    Created_at: item.created_at,
-                    Length_time: item.length_time,
-                    Location_at: item.location_at,
-                    Feeling: item.feeling
-                }));
-                newRecords.sort(
-                    (a: Record, b: Record) =>
-                        new Date(b.Created_at).getTime() - new Date(a.Created_at).getTime()
-                );
-                setRecords(newRecords);
-            }
-        } catch (error) {
-            console.error('データ取得に失敗しました', error);
+        const records = await fetchToiletRecords();
+        if (records != null) {
+            setRecords(records)
         }
     }, []);
 

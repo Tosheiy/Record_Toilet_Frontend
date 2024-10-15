@@ -2,11 +2,11 @@ import React from 'react';
 import './App.css';
 import OverlayRecord from './OverlayRecord';
 import OverlayModify from './OverlayModify';
-import RecordTable from '../RecordTable';
+import RecordTable from './RecordTable';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '../login/firebase';
 import { useNavigate, useLocation } from 'react-router-dom';
-import useRecords from '../useRecords';
+import useRecords from './useRecords';
 
 function App() {
   const [user] = useAuthState(auth);

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Record } from './types';
+import { Record } from '../types';
 
 interface RecordTableProps {
     records: Record[];
