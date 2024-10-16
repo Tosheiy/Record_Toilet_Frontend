@@ -3,7 +3,7 @@ import './OverlayRecord.css';
 import { useState } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '../login/firebase';
-import { postRecord } from '../api';
+import { postRecord } from '../../api/api';
 
 interface OverlayProps {
     onClose: () => void; // 閉じる関数を渡す

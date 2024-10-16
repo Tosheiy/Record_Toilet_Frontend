@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '../login/firebase';
-
-const requestURL = process.env.REACT_APP_REQUEST_URL;
+import { pingCheck } from '../../api/api';
 
 function YourTummy() {
     const [user] = useAuthState(auth);
@@ -13,23 +11,10 @@ function YourTummy() {
         const fetchData = async () => {
             try {
                 if (user) {
-                    // トークンを取得する
-                    let idToken = '';
-                    if (auth.currentUser) {
-                        idToken = await auth.currentUser.getIdToken();
-                    }
-
                     // POSTリクエストを送信
-                    const result = await axios.get(requestURL + '/ping', {
-                        headers: {
-                            'Content-Type': 'application/json',
-                            // 認証情報をヘッダーに追加
-                            'Authorization': `Bearer ${idToken}`
-                        }
-                    });
-
+                    const result = await pingCheck()
                     // データをstateに設定
-                    setData(result.data);
+                    setData(result);
                 }
             } catch (err) {
                 console.error('データの取得に失敗しました', err);
@@ -42,8 +27,8 @@ function YourTummy() {
 
     return (
         <div className="App">
-           <p>作成中</p>
-            <p>AIで今の溜まり具合を予測</p>
+            <p>作成中</p>
+            <p>AIで今の溜まり具合を予測s</p>
             {/* 取得したデータを表示 */}
             <p>{data ? JSON.stringify(data) : 'データがありません'}</p>
         </div>

@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
-import { Record } from '../types';
-import { fetchToiletRecords } from '../api'
+import { Record } from '../types/types';
+import { fetchToiletRecords } from '../api/api'
 
 function useRecords() {
     const [records, setRecords] = useState<Record[]>([]);
@@ -17,10 +17,8 @@ function useRecords() {
     }, []);
 
     useEffect(() => {
-        if (recordsUpdated) {
-            fetchData();
-            setRecordsUpdated(false);
-        }
+        fetchData();
+        setRecordsUpdated(false);
     }, [recordsUpdated, fetchData]);
 
     const handleAddOrEdit = () => {
@@ -47,6 +45,7 @@ function useRecords() {
         selectedRecord,
         isOverlayVisibleMaking,
         isOverlayVisibleModify,
+        fetchData,
         toggleOverlayMaking,
         toggleOverlayModify,
         handleOverlayModifyClick,

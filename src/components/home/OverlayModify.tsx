@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './OverlayModify.css';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '../login/firebase';
-import { updateRecord, deleteRecord } from '../api'
+import { updateRecord, deleteRecord } from '../../api/api'
 
 interface OverlayProps {
     onClose: () => void; // 閉じる関数を渡す
@@ -48,7 +48,7 @@ const OverlayModify: React.FC<OverlayProps> = ({ onClose, id, init_date, init_va
             };
 
             try {
-                await updateRecord(id ,recordData);
+                await updateRecord(id, recordData);
 
                 // 登録が成功したらオーバーレイを閉じる
                 onClose();
@@ -98,7 +98,8 @@ const OverlayModify: React.FC<OverlayProps> = ({ onClose, id, init_date, init_va
                     <input type="text" style={{
                         overflow: 'hidden',
                         whiteSpace: 'nowrap',
-                        textOverflow: 'ellipsis',}} className="textbox-3-modify" maxLength={50} placeholder="説明を入力" value={description} onChange={(e) => setDescription(e.target.value)} />
+                        textOverflow: 'ellipsis',
+                    }} className="textbox-3-modify" maxLength={50} placeholder="説明を入力" value={description} onChange={(e) => setDescription(e.target.value)} />
                 </label>
                 <div className='button-container-modify'>
                     <button className="register_Button-modify" onClick={handleSubmitClickModify}>完了</button>

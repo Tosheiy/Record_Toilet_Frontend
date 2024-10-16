@@ -1,6 +1,6 @@
 import axios from 'axios';
-import { auth } from './login/firebase';
-import { Record } from './types';
+import { auth } from '../components/login/firebase';
+import { Record } from '../types/types';
 
 const requestURL = process.env.REACT_APP_REQUEST_URL || '';
 
@@ -48,7 +48,7 @@ export const fetchToiletRecords = async (): Promise<Record[] | null> => {
 
 export const postRecord = async (recordData: any): Promise<void> => {
     const idToken = await getIdToken();
-    await axios.post(`${requestURL}/toilet/`, recordData, {
+    await axios.post(`${requestURL}/toilet`, recordData, {
         headers: {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${idToken}`
@@ -79,7 +79,7 @@ export const deleteRecord = async (id: string): Promise<void> => {
 // 自分のAPIキーを取得
 export const fetchUser = async () => {
     const idToken = await getIdToken();
-    const result = await axios.get(requestURL + "/toilet/self", {
+    const result = await axios.get(`${requestURL}/toilet/self`, {
         headers: {
             'Authorization': `Bearer ${idToken}`
         }
@@ -90,7 +90,7 @@ export const fetchUser = async () => {
 // APIキーを生成
 export const generateAPIKey = async () => {
     const idToken = await getIdToken();
-    const result = await axios.get(requestURL + "/toilet/self/register", {
+    const result = await axios.get(`${requestURL}/toilet/self/register`, {
         headers: {
             'Authorization': `Bearer ${idToken}`
         }
@@ -101,7 +101,7 @@ export const generateAPIKey = async () => {
 // APIキーを更新
 export const updateAPIKey = async (utid: string) => {
     const idToken = await getIdToken();
-    const result = await axios.put(requestURL + "/toilet/self/" + utid, {}, {
+    const result = await axios.put(`${requestURL}/toilet/self/${utid}`, {}, {
         headers: {
             'Authorization': `Bearer ${idToken}`
         }
@@ -112,10 +112,21 @@ export const updateAPIKey = async (utid: string) => {
 // APIキーを削除
 export const deleteAPIKey = async (utid: string) => {
     const idToken = await getIdToken();
-    const result = await axios.delete(requestURL + "/toilet/self/" + utid, {
+    const result = await axios.delete(`${requestURL}/toilet/self/${utid}`, {
         headers: {
             'Authorization': `Bearer ${idToken}`
         }
     });
     return result.data;
+};
+
+export const pingCheck = async () => {
+    const idToken = await getIdToken();
+    const result = await axios.get(`${requestURL}/ping`, {
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${idToken}`
+        }
+    });
+    return result.data
 };

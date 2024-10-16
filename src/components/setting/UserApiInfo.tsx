@@ -1,6 +1,6 @@
 // UserApiInfo.tsx
 import React from 'react';
-import OverlayChecking from './OverlayChecking';
+import OverlayChecking from '../../OverlayChecking';
 
 interface UserApiInfoProps {
     utid: string;

@@ -6,7 +6,8 @@ import RecordTable from './RecordTable';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '../login/firebase';
 import { useNavigate, useLocation } from 'react-router-dom';
-import useRecords from './useRecords';
+import useRecords from '../../hooks/useRecords';
+import LoginButton from './LoginButton';
 
 function App() {
   const [user] = useAuthState(auth);
@@ -15,22 +16,20 @@ function App() {
     selectedRecord,
     isOverlayVisibleMaking,
     isOverlayVisibleModify,
+    fetchData,
     toggleOverlayMaking,
     toggleOverlayModify,
     handleOverlayModifyClick,
-    handleAddOrEdit
   } = useRecords();
 
   const navigate = useNavigate();
   const location = useLocation();
 
   React.useEffect(() => {
-    if (!user) {
-      navigate('/login'); // 未ログインの場合リダイレクト
-    } else {
-      handleAddOrEdit(); // ログイン後データを取得
+    if (user) {
+      fetchData(); // ログイン後データを取得
     }
-  }, [user, location, navigate, handleAddOrEdit]);
+  }, [user, location, navigate, fetchData]);
 
   return (
     <div className="App">
@@ -55,7 +54,7 @@ function App() {
           )}
         </>
       ) : (
-        <p>ログインしてください</p>
+        <LoginButton />
       )}
     </div>
   );

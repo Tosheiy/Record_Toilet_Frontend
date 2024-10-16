@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '../login/firebase';
-import { fetchUser, generateAPIKey, updateAPIKey, deleteAPIKey } from '../api';
+import { fetchUser, generateAPIKey, updateAPIKey, deleteAPIKey } from '../../api/api';
 import UserApiInfo from './UserApiInfo';
 import './Setting.css';
 

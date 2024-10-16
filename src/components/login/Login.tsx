@@ -3,7 +3,7 @@ import './Login.css';
 import { auth } from './firebase';
 import { useAuthState } from "react-firebase-hooks/auth"
 import { useNavigate } from 'react-router-dom';
-import OverlayChecking from '../main/OverlayChecking';
+import OverlayChecking from '../../OverlayChecking';
 
 function Login() {
     const [user] = useAuthState(auth);
@@ -55,7 +55,7 @@ function SignOutButton() {
     const logoutProcess = async () => {
         await auth.signOut()
         navigate('/login');
-    } 
+    }
 
 
     return (

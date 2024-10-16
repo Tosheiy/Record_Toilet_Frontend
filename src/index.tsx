@@ -2,11 +2,11 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import './index.css';
-import App from './home/App';
-import YourTummy from './main/YourTummy';
-import LoginSelect from './login/LoginSelect';
-import Navi from './main/Navi';
-import Setting from './main/Setting';
+import App from './components/home/App';
+import YourTummy from './components/setting/YourTummy';
+import LoginSelect from './components/login/LoginSelect';
+import Navi from './Navi';
+import Setting from './components/setting/Setting';
 import reportWebVitals from './tmp/reportWebVitals';
 
 const root = ReactDOM.createRoot(
