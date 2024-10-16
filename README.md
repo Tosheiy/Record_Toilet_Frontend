@@ -1,5 +1,9 @@
 # RecordToilet フロントエンド
 
+AWS URL -> https://d2nehq3rb6dh1o.cloudfront.net
+
+
+
 ### npm run build
 buildファイルを作成する
 
