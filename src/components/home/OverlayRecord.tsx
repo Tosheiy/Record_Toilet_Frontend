@@ -1,9 +1,9 @@
 import React from 'react';
 import './OverlayRecord.css';
 import { useState } from 'react';
-import axios from 'axios';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '../login/firebase';
+import { postRecord } from '../../api/api';
 
 interface OverlayProps {
     onClose: () => void; // 閉じる関数を渡す
@@ -36,28 +36,15 @@ const OverlayRecord: React.FC<OverlayProps> = ({ onClose }) => {
 
         const recordData = {
             description: description,
-            length: parseNumber(time),
-            location: location,
+            length_time: parseNumber(time),
+            location_at: location,
             feeling: parseNumber(feeling),
-            timestamp: date,
+            created_at: date.slice(0, 16).replace('T', ' '),
         };
 
         if (user) {
             try {
-                // トークンを取得する
-                let idToken = '';
-                if (auth.currentUser) {
-                    idToken = await auth.currentUser.getIdToken();
-                }
-
-                // POSTリクエストを送信
-                await axios.post('http://localhost:8080/toilet', recordData, {
-                    headers: {
-                        'Content-Type': 'application/json',
-                        // 多分ここに認証情報
-                        'Authorization': `Bearer ${idToken}`
-                    }
-                });
+                await postRecord(recordData);
 
                 // 登録が成功したらオーバーレイを閉じる
                 onClose();

@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import './OverlayModify.css';
-import axios from 'axios';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '../login/firebase';
+import { updateRecord, deleteRecord } from '../../api/api'
 
 interface OverlayProps {
     onClose: () => void; // 閉じる関数を渡す
@@ -41,28 +41,14 @@ const OverlayModify: React.FC<OverlayProps> = ({ onClose, id, init_date, init_va
         if (user) {
             const recordData = {
                 description: description,
-                length: parseNumber(time),
-                location: location,
+                length_time: parseNumber(time),
+                location_at: location,
                 feeling: parseNumber(feeling),
-                timestamp: date,
+                created_at: date.slice(0, 16).replace('T', ' '),
             };
 
-            const id_num = parseNumber(id);
-
             try {
-                // トークンを取得する
-                let idToken = '';
-                if (auth.currentUser) {
-                    idToken = await auth.currentUser.getIdToken();
-                }
-
-                // POSTリクエストを送信
-                await axios.put('http://localhost:8080/toilet/' + id_num, recordData, {
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${idToken}`
-                    }
-                });
+                await updateRecord(id, recordData);
 
                 // 登録が成功したらオーバーレイを閉じる
                 onClose();
@@ -76,22 +62,8 @@ const OverlayModify: React.FC<OverlayProps> = ({ onClose, id, init_date, init_va
         e.preventDefault(); // ページリロードを防ぐ
 
         if (user) {
-            const id_num = parseNumber(id);
-
             try {
-                // トークンを取得する
-                let idToken = '';
-                if (auth.currentUser) {
-                    idToken = await auth.currentUser.getIdToken();
-                }
-
-                // POSTリクエストを送信
-                await axios.delete('http://localhost:8080/toilet/' + id_num, {
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${idToken}`
-                    }
-                });
+                await deleteRecord(id);
 
                 // 登録が成功したらオーバーレイを閉じる
                 onClose();
@@ -126,7 +98,8 @@ const OverlayModify: React.FC<OverlayProps> = ({ onClose, id, init_date, init_va
                     <input type="text" style={{
                         overflow: 'hidden',
                         whiteSpace: 'nowrap',
-                        textOverflow: 'ellipsis',}} className="textbox-3-modify" maxLength={50} placeholder="説明を入力" value={description} onChange={(e) => setDescription(e.target.value)} />
+                        textOverflow: 'ellipsis',
+                    }} className="textbox-3-modify" maxLength={50} placeholder="説明を入力" value={description} onChange={(e) => setDescription(e.target.value)} />
                 </label>
                 <div className='button-container-modify'>
                     <button className="register_Button-modify" onClick={handleSubmitClickModify}>完了</button>

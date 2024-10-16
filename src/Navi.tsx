@@ -1,8 +1,8 @@
 import { Link } from 'react-router-dom';
 import './Navi.css';
 import { useAuthState } from 'react-firebase-hooks/auth';
-import { auth } from '../login/firebase';
-import { UserInfo, SignOutButton, SignInButton } from '../login/Login'
+import { auth } from './components/login/firebase';
+import { UserInfo, SignOutButton, SignInButton } from './components/login/Login'
 
 
 function Navi() {
